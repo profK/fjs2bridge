@@ -1,0 +1,7 @@
+{
+  "inputpath": "input",
+  "outpath": ".",
+  "namespace": "FVTTBridge.Bindings",
+  "extensions": [".js"],
+  "exclude": ["Actor.js", "ActorSheet.js"]
+}
