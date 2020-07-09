@@ -1,19 +1,16 @@
+import ast
 import os
 import sys
-
 import esprima
-import jsonpickle
+from Esprima4TreeVisitor import Esprima4TreeVisitor
+
 
 
 def do_ts_file(namespace,infilename,inputpath,outputpath):
     try:
         with open(inputpath+"/"+infilename,'r',encoding="utf-8") as fin:
-            with open('ast.json','w') as fout:
-                ast = esprima.parseScript(fin.read())
-                ostdout = sys.stdout
-                sys.stdout = fout
-                print(ast)
-                sys.stdout=ostdout
+            ast = esprima.parseScript(fin.read())
+            Esprima4TreeVisitor().Visit(ast)
     except Exception as ex:
         print(ex)
 
