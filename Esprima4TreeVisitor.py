@@ -41,11 +41,48 @@ class Esprima4TreeVisitor:
             self.DoEnterProperty(node)
             self.DoProperty(node)
             self.DoExitProperty(node)
+        elif (node.type=="ClassDeclaration"):
+            self.DoEnterClassDeclaration(node)
+            self.DoClassDeclaration(node)
+            self.DoExitClassDeclaration(node)
+        elif (node.type=="MemberExpression"):
+            self.DoEnterMemberExpression(node)
+            self.DoMemberExpression(node)
+            self.DoExitMemberExpression(node)
+        elif (node.type == "UnaryExpression"):
+            self.DoEnterUnaryExpression(node)
+            self.DoUnaryExpression(node)
+            self.DoExitUnaryExpression(node)
+        elif (node.type == "CallExpression"):
+            self.DoEnterCallExpression(node)
+            self.DoCallExpression(node)
+            self.DoExitCallExpression(node)
+        elif (node.type == "TryStatement"):
+            self.DoEnterTryStatement(node)
+            self.DoTryStatement(node)
+            self.DoExitTryStatement(node)
+        elif (node.type == "ExpressionStatement"):
+            self.DoEnterExpressionStatement(node)
+            self.DoExpressionStatement(node)
+            self.DoExitExpressionStatement(node)
+        elif (node.type == "FunctionDeclaration"):
+            self.DoEnterFunctionDeclaration(node)
+            self.DoFunctionDeclaration(node)
+            self.DoExitFunctionDeclaration(node)
+        elif (node.type == "ClassBody"):
+            self.DoEnterClassBody(node)
+            self.DoClassBody(node)
+            self.DoExitClassBody(node)
+        elif (node.type == "NewExpression"):
+            self.DoEnterNewExpression(node)
+            self.DoNewExpression(node)
+            self.DoExitNewExpression(node)
         else:
-            self.Print("Unimplemented node type: "+node.type)
+            print("Unimplemented node type: "+node.type)
     
     def Print(self,string):
-        print(self.indent+string)
+        x=2
+        #print(self.indent+string)
 
     def EnterNode(self,name):
         self.Print("Entering "+name)
@@ -132,4 +169,69 @@ class Esprima4TreeVisitor:
         self.Print("Method: "+str(node.method))
         self.Print("Shorthand: "+str(node.shorthand))
     def DoExitProperty(self,node):
+        self.ExitNode(node.type)
+
+    def DoEnterClassDeclaration(self,node):
+        self.EnterNode(node.type)
+    def DoClassDeclaration(self,node):
+        self.Visit(node.id)
+        self.Visit(node.body)
+    def DoExitClassDeclaration(self,node):
+        self.ExitNode(node.type)
+
+    def DoEnterMemberExpression(self,node):
+        self.EnterNode(node.type)
+    def DoMemberExpression(self,node):
+        pass
+    def DoExitMemberExpression(self,node):
+        self.ExitNode(node.type)
+
+    def DoEnterUnaryExpression(self,node):
+        self.EnterNode(node.type)
+    def DoUnaryExpression(self,node):
+        pass
+    def DoExitUnaryExpression(self, node):
+        self.ExitNode(node.type)
+
+    def DoEnterCallExpression(self,node):
+        self.EnterNode(node.type)
+    def DoCallExpression(self,node):
+        pass
+    def DoExitCallExpression(self, node):
+        self.ExitNode(node.type)
+
+
+    def DoEnterTryStatement(self,node):
+        self.EnterNode(node.type)
+    def DoTryStatement(self,node):
+        pass
+    def DoExitTryStatement(self,node):
+        self.ExitNode(node.type)
+
+    def DoEnterExpressionStatement(self,node):
+        self.EnterNode(node.type)
+    def DoExpressionStatement(self,node):
+        pass
+    def DoExitExpressionStatement(self,node):
+        self.ExitNode(node.type)
+
+    def DoEnterFunctionDeclaration(self,node):
+        self.EnterNode(node.type)
+    def DoFunctionDeclaration(self,node):
+        pass
+    def DoExitFunctionDeclaration(self,node):
+        self.ExitNode(node.type)
+
+    def DoEnterClassBody(self,node):
+        self.EnterNode(node.type)
+    def DoClassBody(self,node):
+        pass
+    def DoExitClassBody(self,node):
+        self.ExitNode(node.type)
+
+    def DoEnterNewExpression(self,node):
+        self.EnterNode(node.type)
+    def DoNewExpression(self,node):
+        pass
+    def DoExitNewExpression(self,node):
         self.ExitNode(node.type)
