@@ -77,12 +77,40 @@ class Esprima4TreeVisitor:
             self.DoEnterNewExpression(node)
             self.DoNewExpression(node)
             self.DoExitNewExpression(node)
+        elif (node.type == "ArrowFunctionExpression"):
+            self.DoEnterArrowFunctionExpression(node)
+            self.DoArrowFunctionExpression(node)
+            self.DoExitArrowFunctionExpression(node)
+        elif (node.type == "BlockStatement"):
+            self.DoEnterBlockStatement(node)
+            self.DoBlockStatement(node)
+            self.DoExitBlockStatement(node)
+        elif (node.type == "CatchClause"):
+            self.DoEnterCatchClause(node)
+            self.DoCatchClause(node)
+            self.DoExitCatchClause(node)
+        elif (node.type == "AssignmentExpression"):
+            self.DoEnterAssignmentExpression(node)
+            self.DoAssignmentExpression(node)
+            self.DoExitAssignmentExpression(node)
+        elif (node.type == "BlockStatement"):
+            self.DoEnterBlockStatement(node)
+            self.DoBlockStatement(node)
+            self.DoExitBlockStatement(node)
+        elif (node.type == "ReturnStatement"):
+            self.DoEnterReturnStatement(node)
+            self.DoReturnStatement(node)
+            self.DoExitReturnStatement(node)
+        elif (node.type == "FunctionExpression"):
+            self.DoEnterFunctionExpression(node)
+            self.DoFunctionExpression(node)
+            self.DoExitFunctionExpression(node)
         else:
             print("Unimplemented node type: "+node.type)
     
     def Print(self,string):
-        x=2
-        #print(self.indent+string)
+        #pass
+        print(self.indent+string)
 
     def EnterNode(self,name):
         self.Print("Entering "+name)
@@ -189,14 +217,18 @@ class Esprima4TreeVisitor:
     def DoEnterUnaryExpression(self,node):
         self.EnterNode(node.type)
     def DoUnaryExpression(self,node):
-        pass
+        self.Print("prefix:"+str(node.prefix))
+        self.Print("operator: "+str(node.operator))
+        self.Visit(node.argument)
     def DoExitUnaryExpression(self, node):
         self.ExitNode(node.type)
 
     def DoEnterCallExpression(self,node):
         self.EnterNode(node.type)
     def DoCallExpression(self,node):
-        pass
+        self.Visit(node.callee)
+        for arg in node.arguments:
+            self.Visit(arg)
     def DoExitCallExpression(self, node):
         self.ExitNode(node.type)
 
@@ -204,34 +236,111 @@ class Esprima4TreeVisitor:
     def DoEnterTryStatement(self,node):
         self.EnterNode(node.type)
     def DoTryStatement(self,node):
-        pass
+        self.Visit(node.block)
+        self.Visit(node.handler)
     def DoExitTryStatement(self,node):
         self.ExitNode(node.type)
 
     def DoEnterExpressionStatement(self,node):
         self.EnterNode(node.type)
     def DoExpressionStatement(self,node):
-        pass
+        self.Visit(node.expression)
     def DoExitExpressionStatement(self,node):
         self.ExitNode(node.type)
 
     def DoEnterFunctionDeclaration(self,node):
         self.EnterNode(node.type)
     def DoFunctionDeclaration(self,node):
-        pass
+        self.Print("expression: "+str(node.expression))
+        self.Print("isAsync: "+str(node.isAsync))
+        self.Print("generator: "+str(node.generator))
+        self.Visit(node.id)
+        for param in node.params:
+            self.Visit(param)
+        self.Visit(node.body)
     def DoExitFunctionDeclaration(self,node):
         self.ExitNode(node.type)
+        for subnode in node.body:
+            self.Visit(subnode)
 
     def DoEnterClassBody(self,node):
         self.EnterNode(node.type)
     def DoClassBody(self,node):
-        pass
+        for subnode in node.body:
+            self.Visit(subnode)
     def DoExitClassBody(self,node):
         self.ExitNode(node.type)
 
     def DoEnterNewExpression(self,node):
         self.EnterNode(node.type)
     def DoNewExpression(self,node):
-        pass
+        self.Visit(node.callee)
+        for arg in node.arguments:
+            self.Visit(arg)
     def DoExitNewExpression(self,node):
+        self.ExitNode(node.type)
+
+
+    def DoEnterArrowFunctionExpression(self,node):
+        self.EnterNode(node.type)
+    def DoArrowFunctionExpression(self,node):
+        self.Print("generator: "+str(node.generator))
+        self.Print("isAsync:"+str(node.isAsync))
+        self.Print("expression: "+str(node.expression))
+        for param in node.params:
+            self.Visit(param)
+        self.Visit(node.body)
+    def DoExitArrowFunctionExpression(self,node):
+        self.ExitNode(node.type)
+
+    def DoEnterBlockStatement(self,node):
+        self.EnterNode(node.type)
+    def DoBlockStatement(self, node):
+        for subnode in node.body:
+            self.Visit(subnode)
+    def DoExitBlockStatement(self,node):
+        self.ExitNode(node.type)
+
+    def DoEnterCatchClause(self,node):
+        self.EnterNode(node.type)
+    def DoCatchClause(self, node):
+        self.Visit(node.param)
+        self.Visit(node.body)
+    def DoExitCatchClause(self,node):
+        self.ExitNode(node.type)
+
+    def DoEnterAssignmentExpression(self,node):
+        self.EnterNode(node.type)
+    def DoAssignmentExpression(self,node):
+        self.Print("operator: "+str(node.operator))
+        self.Visit(node.left)
+        self.Visit(node.right)
+    def DoExitAssignmentExpression(self,node):
+        self.ExitNode(node.type)
+
+    def DoEnterBlockStatement(self,node):
+        self.EnterNode(node.type)
+    def DoBlockStatement(self,node):
+        for subnode in node.body:
+            self.Visit(subnode)
+    def DoExitBlockStatement(self,node):
+        self.ExitNode(node.type)
+
+    def DoEnterReturnStatement(self,node):
+        self.EnterNode(node.type)
+    def DoReturnStatement(self,node):
+        self.Visit(node.argument)
+    def DoExitReturnStatement(self,node):
+        self.ExitNode(node.type)
+
+    def DoEnterFunctionExpression(self,node):
+        self.EnterNode(node.type)
+    def DoFunctionExpression(self,node):
+        self.Print("expression: "+str(node.expression))
+        self.Print("isAsync"+str(node.isAsync))
+        self.Print("generator: "+str(node.generator))
+        for param in node.params:
+            self.Visit(param)
+        self.Visit(node.body)
+    def DoExitFunctionExpression(self,node):
         self.ExitNode(node.type)
