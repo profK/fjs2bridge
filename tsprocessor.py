@@ -2,7 +2,7 @@ import ast
 import os
 import sys
 import esprima
-from Esprima4TreeVisitor import Esprima4TreeVisitor
+from ES6Visitor import ES6Visitor
 
 
 
@@ -10,7 +10,7 @@ def do_ts_file(namespace,infilename,inputpath,outputpath):
     try:
         with open(inputpath+"/"+infilename,'r',encoding="utf-8") as fin:
             ast = esprima.parseScript(fin.read())
-            Esprima4TreeVisitor().Visit(ast)
+            ES6Visitor().Visit(ast)
     except Exception as ex:
         print(ex)
 
