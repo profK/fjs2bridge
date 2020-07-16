@@ -29,8 +29,7 @@ using System;
         """)
         self.fout.write("""
     [External]
-    [Namespace(false)]
-        """)
+    [Namespace(false)] """)
         self.fout.write("""   
     public class """+node.id.name+"""{
     """)
