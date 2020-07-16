@@ -2,6 +2,8 @@ import ast
 import os
 import sys
 import esprima
+
+from BridgeGenerator import BridgeGenerator
 from ES6Visitor import ES6Visitor
 
 
@@ -10,7 +12,7 @@ def do_ts_file(namespace,infilename,inputpath,outputpath):
     try:
         with open(inputpath+"/"+infilename,'r',encoding="utf-8") as fin:
             ast = esprima.parseScript(fin.read())
-            ES6Visitor().Visit(ast)
+            BridgeGenerator(outputpath,namespace).Visit(ast)
     except Exception as ex:
         print(ex)
 
