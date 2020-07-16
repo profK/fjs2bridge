@@ -23,9 +23,9 @@ using System;
         
         """)
         self.fout.write("""
-    namespace """+self.packageName)
+namespace """+self.packageName)
         self.fout.write("""
-    {
+{
         """)
         self.fout.write("""
     [External]

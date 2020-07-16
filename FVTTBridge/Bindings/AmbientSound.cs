@@ -3,8 +3,8 @@ using Bridge;
 using System;
         
         
-    namespace FVTTBridge.Bindings
-    {
+namespace FVTTBridge.Bindings
+{
         
     [External]
     [Namespace(false)]    
