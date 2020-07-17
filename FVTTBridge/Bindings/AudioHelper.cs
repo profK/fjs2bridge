@@ -9,15 +9,15 @@ namespace FVTTBridge.Bindings
     [External]
     [Namespace(false)]    
     public class AudioHelper{
-       public dynamic locked;
-       public dynamic pending;
-       public dynamic _analyserInterval;
        public dynamic _analyserStreams;
-       public dynamic sounds;
        public dynamic _fftArray;
+       public dynamic locked;
+       public dynamic _analyserInterval;
+       public dynamic pending;
        public dynamic _audioContext;
+       public dynamic sounds;
        public dynamic registerSettings();
-       public dynamic create(dynamic optionsObject);
+       public dynamic create(optionsObject);
        public dynamic play(dynamic src, dynamic id);
        public dynamic awaitFirstGesture();
        public dynamic _onFirstGesture(dynamic event);

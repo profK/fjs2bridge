@@ -57,35 +57,47 @@ namespace """+self.packageName)
 
     def GetParamName(self,node):
         if (node.type=="Identifier"):
-           return node.name
+           return "dynamic "+node.name
         elif node.type=="AssignmentPattern":
             return self.GetParamName(node.left)
         elif node.type=="MethodDefinition":
-            return self.GetParamName(node.key)
+            return self.GetParamName(str(node.key))
         elif node.type=="ObjectExpression":
             return "optionsObject"
         elif node.type == "ObjectPattern":
             return "optionsObject"
+        elif node.type=="RestElement":
+            return "params dynamic[] "+node.argument.name
         else:
             raise Exception("Unknown param node type: "+str(node.type))
 
     def DoEnterMethodDefinition(self,node):
         if node.kind == "constructor":
             self.inConstructor = True
+            self.classVariables = set()
         else:
-            self.fout.write("       public dynamic "+node.key.name+"(")
-            first=True
-            for param in node.value.params:
-                if not first:
-                    self.fout.write(", ")
-                self.fout.write("dynamic "+self.GetParamName(param))
-                first = False
-            self.fout.write(");\n")
+            if node.key.type=="Identifier":
+                self.fout.write("       public dynamic "+str(node.key.name)+"(")
+                first=True
+                for param in node.value.params:
+                    if not first:
+                        self.fout.write(", ")
+                    self.fout.write(str(self.GetParamName(param)))
+                    first = False
+                self.fout.write(");\n")
+            elif node.key.type=="MemberExpression":
+                if node.key.object.name=="Symbol":
+                    if node.key.property.name=="iterator":
+                        self.fout.write("       public dynamic this[int i]{get;set;}\n")
+                    else:
+                        raise Exception("Unknown symbol name: "+node.key.property.name)
+            else:
+                raise Exception("Unknown method type: " + node.key.property.name)
     def DoExitMethodDefinition(self,node):
         if node.kind == "constructor":
             self.inConstructor = False
             for varname in self.classVariables:
-                self.fout.write("       public dynamic " + varname + ";\n")
+                self.fout.write("       public dynamic " + str(varname) + ";\n")
 
     def DoAssignmentExpression(self,node):
         if(self.inConstructor):
