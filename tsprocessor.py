@@ -8,15 +8,15 @@ from ES6Visitor import ES6Visitor
 
 
 
-def do_ts_file(namespace,infilename,inputpath,outputpath):
+def do_ts_file(namespace,infilename,inputpath,outputpath,overrides):
     try:
         with open(inputpath+"/"+infilename,'r',encoding="utf-8") as fin:
             ast = esprima.parseScript(fin.read())
-            BridgeGenerator(outputpath,namespace).Visit(ast)
+            BridgeGenerator(outputpath,namespace,overrides).Visit(ast)
     except Exception as ex:
         print(ex)
 
-def ProcessTypeScriptFiles(namespaceroot,inputpath,outputpath,extlist=[".ts"],excludelist=[]):
+def ProcessTypeScriptFiles(namespaceroot,inputpath,outputpath,extlist,excludelist,overrides):
     dirlist = os.listdir(inputpath)
     for entryname in dirlist:
         fileinpath = inputpath+"/"+entryname
@@ -25,9 +25,9 @@ def ProcessTypeScriptFiles(namespaceroot,inputpath,outputpath,extlist=[".ts"],ex
             ext = os.path.splitext(entryname)[1]
             if (ext in extlist):
                 if (not entryname in excludelist):
-                    do_ts_file(namespaceroot,entryname,inputpath,outputpath)
+                    do_ts_file(namespaceroot,entryname,inputpath,outputpath,overrides)
         elif (os.path.isdir(fileinpath)):
             if (not os.path.isdir(fileoutpath)):
                 os.mkdir(fileoutpath)
-                ProcessTypeScriptFiles(namespaceroot+"."+entryname,fileoutpath,extlist,excludelist)
+                ProcessTypeScriptFiles(namespaceroot+"."+entryname,fileoutpath,extlist,excludelist,overrides)
 

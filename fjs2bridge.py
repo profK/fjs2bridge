@@ -15,4 +15,4 @@ if(not os.path.isdir(outputdir)):
     os.makedirs(outputdir)
 
 ProcessTypeScriptFiles(config["namespace"],config["inputpath"],
-                       outputdir,config["extensions"], config["exclude"])
+                       outputdir,config["extensions"], config["exclude"],config["overrides"])

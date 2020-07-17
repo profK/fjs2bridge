@@ -1,0 +1,30 @@
+
+using Bridge;
+using System;
+        
+        
+namespace FVTTBridge.Bindings
+{
+        
+    [External]
+    [Namespace(false)]    
+    public class EntityCollection{
+       public dynamic _source;
+       public dynamic apps;
+       public dynamic _initialize(dynamic data){return null;}//dummy return
+       public dynamic entities(){return null;}//dummy return
+       public dynamic render(params dynamic[] args){return null;}//dummy return
+       public dynamic name(){return null;}//dummy return
+       public dynamic instance(){return null;}//dummy return
+       public dynamic directory(){return null;}//dummy return
+       public dynamic object(){return null;}//dummy return
+       public dynamic entity(){return null;}//dummy return
+       public dynamic getName(dynamic name, optionsObject){return null;}//dummy return
+       public dynamic insert(dynamic entity){return null;}//dummy return
+       public dynamic remove(dynamic id){return null;}//dummy return
+       public dynamic importFromCollection(dynamic collection, dynamic entryId, dynamic updateData, dynamic options){return null;}//dummy return
+       public dynamic fromCompendium(dynamic data){return null;}//dummy return
+
+    }
+        
+}

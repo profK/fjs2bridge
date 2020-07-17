@@ -6,7 +6,7 @@ import os.path
 class BridgeGenerator(ES6Visitor):
 
 
-    def __init__(self,outputPath,packageName):
+    def __init__(self,outputPath,packageName,overrides):
         super().__init__()
         self.outputpath=outputPath
         self.packageName = packageName
@@ -14,11 +14,13 @@ class BridgeGenerator(ES6Visitor):
         self.inClass=False
         self.inBody=False
         self.inConstructor = False;
+        self.overrides = overrides
         if (not os.path.exists(self.rootOut)):
             os.makedirs(self.rootOut)
 
     def DoEnterClassDeclaration(self,node):
         filePath = self.outputpath+"/"+node.id.name+".cs"
+        self.currentClassname = node.id.name
         self.classVariables = set()
         self.fout = open(filePath,"w")
         self.fout.write("""
@@ -76,6 +78,16 @@ namespace """+self.packageName)
             self.inConstructor = True
             self.classVariables = set()
         else:
+            #do override check
+            if ("methods" in self.overrides):
+                if(self.currentClassname in self.overrides["methods"]):
+                    if(node.key.name in self.overrides["methods"][self.currentClassname]): # overridden
+                        self.fout.write("       "+
+                                        self.overrides["methods"][self.currentClassname][node.key.name]+
+                                        "\n")
+
+                        return
+            #do generation
             if node.key.type=="Identifier":
                 self.fout.write("       public dynamic "+str(node.key.name)+"(")
                 first=True
@@ -84,7 +96,7 @@ namespace """+self.packageName)
                         self.fout.write(", ")
                     self.fout.write(str(self.GetParamName(param)))
                     first = False
-                self.fout.write(");\n")
+                self.fout.write("){return null;}//dummy return\n")
             elif node.key.type=="MemberExpression":
                 if node.key.object.name=="Symbol":
                     if node.key.property.name=="iterator":
