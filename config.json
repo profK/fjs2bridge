@@ -7,10 +7,17 @@
   "overrides": {
     "methods": {
       "Hooks": {
-        "on": "public void on(string evt,Action fn){}",
-        "once": "public void once(string evt,Action fn){}",
-        "off": "public void off(string evt,Action fn){}"
+        "on": "public static void on(string evt,Action fn){}",
+        "once": "public static void once(string evt,Action fn){}",
+        "off": "public static void off(string evt,Action fn){}"
+      },
+      "Actors":{
+        "registerSheet": "public static void registerSheet(params dynamic[] sheets){}"
       }
+    },
+    "parameters": {
+      "event":"evt",
+      "object": "jsobject"
     }
   }
 }

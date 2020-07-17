@@ -9,10 +9,10 @@ namespace FVTTBridge.Bindings
     [External]
     [Namespace(false)]    
     public class DicePool{
-       public dynamic modifiers;
        public dynamic rolls;
-       public dynamic dice;
+       public dynamic modifiers;
        public dynamic total;
+       public dynamic dice;
        public dynamic roll(){return null;}//dummy return
        public dynamic _parseModifiers(dynamic modifiers){return null;}//dummy return
        public dynamic _keepOrDrop(dynamic results, dynamic mod){return null;}//dummy return

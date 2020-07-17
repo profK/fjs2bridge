@@ -9,20 +9,20 @@ namespace FVTTBridge.Bindings
     [External]
     [Namespace(false)]    
     public class Game{
-       public dynamic keyboard;
-       public dynamic i18n;
-       public dynamic modules;
-       public dynamic socket;
        public dynamic data;
-       public dynamic audio;
-       public dynamic settings;
-       public dynamic debug;
-       public dynamic loading;
-       public dynamic video;
-       public dynamic ready;
-       public dynamic sessionId;
-       public dynamic userId;
+       public dynamic modules;
        public dynamic permissions;
+       public dynamic ready;
+       public dynamic video;
+       public dynamic i18n;
+       public dynamic userId;
+       public dynamic sessionId;
+       public dynamic socket;
+       public dynamic audio;
+       public dynamic debug;
+       public dynamic keyboard;
+       public dynamic loading;
+       public dynamic settings;
        public dynamic create(){return null;}//dummy return
        public dynamic connect(dynamic sessionId){return null;}//dummy return
        public dynamic getCookies(){return null;}//dummy return
@@ -51,17 +51,17 @@ namespace FVTTBridge.Bindings
        public dynamic openSockets(){return null;}//dummy return
        public dynamic socketListeners(dynamic socket){return null;}//dummy return
        public dynamic activateListeners(){return null;}//dummy return
-       public dynamic _onBeforeUnload(dynamic event){return null;}//dummy return
-       public dynamic _onClickHyperlink(dynamic event){return null;}//dummy return
-       public dynamic _onPreventDragstart(dynamic event){return null;}//dummy return
-       public dynamic _onPreventDragover(dynamic event){return null;}//dummy return
-       public dynamic _onPreventDrop(dynamic event){return null;}//dummy return
-       public dynamic _onResize(dynamic event){return null;}//dummy return
+       public dynamic _onBeforeUnload(dynamic evt){return null;}//dummy return
+       public dynamic _onClickHyperlink(dynamic evt){return null;}//dummy return
+       public dynamic _onPreventDragstart(dynamic evt){return null;}//dummy return
+       public dynamic _onPreventDragover(dynamic evt){return null;}//dummy return
+       public dynamic _onPreventDrop(dynamic evt){return null;}//dummy return
+       public dynamic _onResize(dynamic evt){return null;}//dummy return
        public dynamic _initializeGameView(){return null;}//dummy return
        public dynamic _initializeLicenseView(){return null;}//dummy return
        public dynamic _initializeSetupView(){return null;}//dummy return
        public dynamic _initializeJoinView(){return null;}//dummy return
-       public dynamic _onJoinFormSubmit(dynamic event){return null;}//dummy return
+       public dynamic _onJoinFormSubmit(dynamic evt){return null;}//dummy return
        public dynamic _initializeStreamView(){return null;}//dummy return
        public dynamic _initializePlayersView(){return null;}//dummy return
 

@@ -9,18 +9,18 @@ namespace FVTTBridge.Bindings
     [External]
     [Namespace(false)]    
     public class AudioHelper{
+       public dynamic locked;
+       public dynamic pending;
+       public dynamic _analyserStreams;
        public dynamic _audioContext;
        public dynamic sounds;
-       public dynamic _fftArray;
-       public dynamic pending;
        public dynamic _analyserInterval;
-       public dynamic locked;
-       public dynamic _analyserStreams;
+       public dynamic _fftArray;
        public dynamic registerSettings(){return null;}//dummy return
-       public dynamic create(optionsObject){return null;}//dummy return
+       public dynamic create(dynamic optionsObject){return null;}//dummy return
        public dynamic play(dynamic src, dynamic id){return null;}//dummy return
        public dynamic awaitFirstGesture(){return null;}//dummy return
-       public dynamic _onFirstGesture(dynamic event){return null;}//dummy return
+       public dynamic _onFirstGesture(dynamic evt){return null;}//dummy return
        public dynamic preload(dynamic data){return null;}//dummy return
        public dynamic socketListeners(dynamic socket){return null;}//dummy return
        public dynamic play(dynamic data, dynamic push){return null;}//dummy return

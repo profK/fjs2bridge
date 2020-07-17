@@ -10,11 +10,11 @@ namespace FVTTBridge.Bindings
     [Namespace(false)]    
     public class BaseGrid{
        public dynamic highlight;
-       public dynamic w;
        public dynamic h;
        public dynamic options;
+       public dynamic w;
        public dynamic draw(){return null;}//dummy return
-       public dynamic highlightGridPosition(dynamic layer, optionsObject){return null;}//dummy return
+       public dynamic highlightGridPosition(dynamic layer, dynamic optionsObject){return null;}//dummy return
        public dynamic getTopLeft(dynamic x, dynamic y){return null;}//dummy return
        public dynamic getCenter(dynamic x, dynamic y){return null;}//dummy return
        public dynamic getSnappedPosition(dynamic x, dynamic y, dynamic interval){return null;}//dummy return

@@ -10,10 +10,10 @@ namespace FVTTBridge.Bindings
     [Namespace(false)]    
     public class ContextMenu{
        public dynamic element;
-       public dynamic _expandUp;
-       public dynamic eventName;
        public dynamic selector;
        public dynamic menuItems;
+       public dynamic _expandUp;
+       public dynamic eventName;
        public dynamic menu(){return null;}//dummy return
        public dynamic bind(){return null;}//dummy return
        public dynamic close(){return null;}//dummy return

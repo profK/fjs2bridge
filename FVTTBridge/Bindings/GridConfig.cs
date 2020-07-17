@@ -18,15 +18,15 @@ namespace FVTTBridge.Bindings
        public dynamic _render(params dynamic[] args){return null;}//dummy return
        public dynamic activateListeners(dynamic html){return null;}//dummy return
        public dynamic close(dynamic options){return null;}//dummy return
-       public dynamic _onKeyDown(dynamic event){return null;}//dummy return
-       public dynamic _onWheel(dynamic event){return null;}//dummy return
-       public dynamic _onReset(dynamic event){return null;}//dummy return
+       public dynamic _onKeyDown(dynamic evt){return null;}//dummy return
+       public dynamic _onWheel(dynamic evt){return null;}//dummy return
+       public dynamic _onReset(dynamic evt){return null;}//dummy return
        public dynamic _scaleBackgroundSize(dynamic delta){return null;}//dummy return
        public dynamic _scaleGridSize(dynamic delta){return null;}//dummy return
-       public dynamic _shiftBackground(optionsObject){return null;}//dummy return
-       public dynamic _refresh(optionsObject){return null;}//dummy return
-       public dynamic _onChangeInput(dynamic event){return null;}//dummy return
-       public dynamic _updateObject(dynamic event, dynamic formData){return null;}//dummy return
+       public dynamic _shiftBackground(dynamic optionsObject){return null;}//dummy return
+       public dynamic _refresh(dynamic optionsObject){return null;}//dummy return
+       public dynamic _onChangeInput(dynamic evt){return null;}//dummy return
+       public dynamic _updateObject(dynamic evt, dynamic formData){return null;}//dummy return
 
     }
         

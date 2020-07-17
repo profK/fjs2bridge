@@ -25,7 +25,7 @@ namespace FVTTBridge.Bindings
        public dynamic isRole(dynamic role){return null;}//dummy return
        public dynamic setPermission(dynamic permission, dynamic allowed){return null;}//dummy return
        public dynamic broadcastActivity(dynamic activityData){return null;}//dummy return
-       public dynamic assignHotbarMacro(dynamic macro, dynamic slot, optionsObject){return null;}//dummy return
+       public dynamic assignHotbarMacro(dynamic macro, dynamic slot, dynamic optionsObject){return null;}//dummy return
        public dynamic getHotbarMacros(dynamic page){return null;}//dummy return
        public dynamic updateTokenTargets(dynamic targetIds){return null;}//dummy return
        public dynamic _onCreate(params dynamic[] args){return null;}//dummy return

@@ -3,6 +3,13 @@ from collections import deque
 from ES6Visitor import ES6Visitor
 import os.path
 
+
+#TODO: add list of disallowed method names to overrides (C# keywords)
+#method names: object
+#TODO: add list of disallowed field names
+#field names: private
+#TODO: Bug, generating same method stub multiple times
+
 class BridgeGenerator(ES6Visitor):
 
 
@@ -57,26 +64,32 @@ namespace """+self.packageName)
     def DoExitClassBody(self,node):
         self.inBody=False
 
+    def CheckParamOverride(self,pname):
+        if ("parameters" in self.overrides):
+            if (pname in self.overrides["parameters"]):
+                pname =  self.overrides["parameters"][pname]
+        return pname
+
     def GetParamName(self,node):
         if (node.type=="Identifier"):
-           return "dynamic "+node.name
+           return "dynamic "+self.CheckParamOverride(node.name)
         elif node.type=="AssignmentPattern":
             return self.GetParamName(node.left)
         elif node.type=="MethodDefinition":
             return self.GetParamName(str(node.key))
         elif node.type=="ObjectExpression":
-            return "optionsObject"
+            return "dynamic optionsObject"
         elif node.type == "ObjectPattern":
-            return "optionsObject"
+            return "dynamic optionsObject"
         elif node.type=="RestElement":
-            return "params dynamic[] "+node.argument.name
+            return "params dynamic[] "+self.CheckParamOverride(node.argument.name)
         else:
             raise Exception("Unknown param node type: "+str(node.type))
 
     def DoEnterMethodDefinition(self,node):
+        self.classVariables = set()
         if node.kind == "constructor":
             self.inConstructor = True
-            self.classVariables = set()
         else:
             #do override check
             if ("methods" in self.overrides):
@@ -94,13 +107,14 @@ namespace """+self.packageName)
                 for param in node.value.params:
                     if not first:
                         self.fout.write(", ")
-                    self.fout.write(str(self.GetParamName(param)))
+                    pname = self.GetParamName(param)
+                    self.fout.write(str(pname))
                     first = False
                 self.fout.write("){return null;}//dummy return\n")
             elif node.key.type=="MemberExpression":
                 if node.key.object.name=="Symbol":
                     if node.key.property.name=="iterator":
-                        self.fout.write("       public dynamic this[int i]{get;set;}\n")
+                        self.fout.write("       public dynamic this[int i]{ get { return null; } }\n")
                     else:
                         raise Exception("Unknown symbol name: "+node.key.property.name)
             else:

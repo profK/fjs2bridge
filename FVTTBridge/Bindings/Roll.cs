@@ -11,12 +11,12 @@ namespace FVTTBridge.Bindings
     public class Roll{
        public dynamic _rolled;
        public dynamic data;
-       public dynamic _formula;
-       public dynamic formula;
-       public dynamic rgx;
-       public dynamic parts;
        public dynamic _result;
+       public dynamic formula;
+       public dynamic _formula;
+       public dynamic parts;
        public dynamic _dice;
+       public dynamic rgx;
        public dynamic _total;
        public dynamic _replaceData(dynamic formula){return null;}//dummy return
        public dynamic result(){return null;}//dummy return
@@ -35,7 +35,7 @@ namespace FVTTBridge.Bindings
        public dynamic _safeEval(dynamic expression){return null;}//dummy return
        public dynamic render(dynamic chatOptions){return null;}//dummy return
        public dynamic getTooltip(){return null;}//dummy return
-       public dynamic toMessage(dynamic messageData, optionsObject){return null;}//dummy return
+       public dynamic toMessage(dynamic messageData, dynamic optionsObject){return null;}//dummy return
        public dynamic alter(dynamic add, dynamic multiply){return null;}//dummy return
        public dynamic cleanFormula(dynamic formula){return null;}//dummy return
        public dynamic minimize(dynamic formula){return null;}//dummy return
