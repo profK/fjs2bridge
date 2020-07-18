@@ -9,9 +9,10 @@ namespace FVTTBridge.Bindings
     [External]
     [Namespace(false)]    
     public class TokenLayer{
-       public dynamic _tabCycle;
-       public dynamic _lastWildcard;
+       public TokenLayer(){}//dummy body
        public dynamic _tabIndex;
+       public dynamic _lastWildcard;
+       public dynamic _tabCycle;
        public dynamic layerOptions(){return null;}//dummy return
        public dynamic hud(){return null;}//dummy return
        public dynamic ownedTokens(){return null;}//dummy return

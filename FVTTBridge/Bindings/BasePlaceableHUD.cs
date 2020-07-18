@@ -9,7 +9,8 @@ namespace FVTTBridge.Bindings
     [External]
     [Namespace(false)]    
     public class BasePlaceableHUD{
-       public dynamic object;
+       public BasePlaceableHUD(params dynamic[] args){}//dummy body
+       public dynamic jsobject;
        public dynamic defaultOptions(){return null;}//dummy return
        public dynamic layer(){return null;}//dummy return
        public dynamic bind(dynamic jsobject){return null;}//dummy return

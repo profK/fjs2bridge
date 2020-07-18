@@ -29,6 +29,7 @@ class BridgeGenerator(ES6Visitor):
         filePath = self.outputpath+"/"+node.id.name+".cs"
         self.currentClassname = node.id.name
         self.classVariables = set()
+        self.classMethods = set()
         self.fout = open(filePath,"w")
         self.fout.write("""
 using Bridge;
@@ -64,15 +65,15 @@ namespace """+self.packageName)
     def DoExitClassBody(self,node):
         self.inBody=False
 
-    def CheckParamOverride(self,pname):
-        if ("parameters" in self.overrides):
-            if (pname in self.overrides["parameters"]):
-                pname =  self.overrides["parameters"][pname]
+    def CheckSymbolOverride(self, pname):
+        if ("symbols" in self.overrides):
+            if (pname in self.overrides["symbols"]):
+                pname =  self.overrides["symbols"][pname]
         return pname
 
     def GetParamName(self,node):
         if (node.type=="Identifier"):
-           return "dynamic "+self.CheckParamOverride(node.name)
+           return "dynamic "+self.CheckSymbolOverride(node.name)
         elif node.type=="AssignmentPattern":
             return self.GetParamName(node.left)
         elif node.type=="MethodDefinition":
@@ -82,7 +83,7 @@ namespace """+self.packageName)
         elif node.type == "ObjectPattern":
             return "dynamic optionsObject"
         elif node.type=="RestElement":
-            return "params dynamic[] "+self.CheckParamOverride(node.argument.name)
+            return "params dynamic[] "+self.CheckSymbolOverride(node.argument.name)
         else:
             raise Exception("Unknown param node type: "+str(node.type))
 
@@ -90,40 +91,50 @@ namespace """+self.packageName)
         self.classVariables = set()
         if node.kind == "constructor":
             self.inConstructor = True
-        else:
-            #do override check
-            if ("methods" in self.overrides):
-                if(self.currentClassname in self.overrides["methods"]):
-                    if(node.key.name in self.overrides["methods"][self.currentClassname]): # overridden
-                        self.fout.write("       "+
-                                        self.overrides["methods"][self.currentClassname][node.key.name]+
-                                        "\n")
+        #do override check
+        if ("methods" in self.overrides):
+            if(self.currentClassname in self.overrides["methods"]):
+                if(node.key.name in self.overrides["methods"][self.currentClassname]): # overridden
+                    self.fout.write("       "+
+                                    self.overrides["methods"][self.currentClassname][node.key.name]+
+                                    "\n")
 
-                        return
-            #do generation
-            if node.key.type=="Identifier":
-                self.fout.write("       public dynamic "+str(node.key.name)+"(")
-                first=True
-                for param in node.value.params:
-                    if not first:
-                        self.fout.write(", ")
-                    pname = self.GetParamName(param)
-                    self.fout.write(str(pname))
-                    first = False
-                self.fout.write("){return null;}//dummy return\n")
-            elif node.key.type=="MemberExpression":
-                if node.key.object.name=="Symbol":
-                    if node.key.property.name=="iterator":
-                        self.fout.write("       public dynamic this[int i]{ get { return null; } }\n")
-                    else:
-                        raise Exception("Unknown symbol name: "+node.key.property.name)
+                    return
+        #do generation
+        if node.key.type=="Identifier":
+            if (self.inConstructor):
+                self.fout.write("       public "+ self.currentClassname + "(")
             else:
-                raise Exception("Unknown method type: " + node.key.property.name)
+                pname=node.key.name
+                altname = self.CheckSymbolOverride(str(pname))
+                if (altname!=pname): #need to set alt name
+                    self.fout.write("       [Name(\"" +pname +"\")]\n")
+                    pname=altname
+                self.fout.write("       public dynamic "+pname+"(")
+            first=True
+            for param in node.value.params:
+                if not first:
+                    self.fout.write(", ")
+                pname = self.GetParamName(param)
+                self.fout.write(str(pname))
+                first = False
+            if self.inConstructor:
+                self.fout.write("){}//dummy body\n")
+            else:
+                self.fout.write("){return null;}//dummy return\n")
+        elif node.key.type=="MemberExpression":
+            if node.key.object.name=="Symbol":
+                if node.key.property.name=="iterator":
+                    self.fout.write("       public dynamic this[int i]{ get { return null; } }\n")
+                else:
+                    raise Exception("Unknown symbol name: "+node.key.property.name)
+        else:
+            raise Exception("Unknown method type: " + node.key.property.name)
     def DoExitMethodDefinition(self,node):
         if node.kind == "constructor":
             self.inConstructor = False
             for varname in self.classVariables:
-                self.fout.write("       public dynamic " + str(varname) + ";\n")
+                self.fout.write("       public dynamic " + self.CheckSymbolOverride(str(varname)) + ";\n")
 
     def DoAssignmentExpression(self,node):
         if(self.inConstructor):

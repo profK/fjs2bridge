@@ -15,9 +15,12 @@
         "registerSheet": "public static void registerSheet(params dynamic[] sheets){}"
       }
     },
-    "parameters": {
+    "symbols": {
       "event":"evt",
-      "object": "jsobject"
+      "object": "jsobject",
+      "private": "isPrivate",
+      "operator": "op",
+      "int": "integer"
     }
   }
 }

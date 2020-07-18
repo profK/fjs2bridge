@@ -9,10 +9,11 @@ namespace FVTTBridge.Bindings
     [External]
     [Namespace(false)]    
     public class FormApplication{
+       public FormApplication(dynamic jsobject, dynamic options){}//dummy body
        public dynamic editors;
-       public dynamic object;
-       public dynamic filepickers;
+       public dynamic jsobject;
        public dynamic form;
+       public dynamic filepickers;
        public dynamic defaultOptions(){return null;}//dummy return
        public dynamic isEditable(){return null;}//dummy return
        public dynamic getData(dynamic options){return null;}//dummy return

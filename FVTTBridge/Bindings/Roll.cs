@@ -9,15 +9,16 @@ namespace FVTTBridge.Bindings
     [External]
     [Namespace(false)]    
     public class Roll{
-       public dynamic _rolled;
-       public dynamic data;
+       public Roll(dynamic formula, dynamic data){}//dummy body
+       public dynamic parts;
        public dynamic _result;
        public dynamic formula;
-       public dynamic _formula;
-       public dynamic parts;
-       public dynamic _dice;
        public dynamic rgx;
+       public dynamic _dice;
+       public dynamic _formula;
+       public dynamic data;
        public dynamic _total;
+       public dynamic _rolled;
        public dynamic _replaceData(dynamic formula){return null;}//dummy return
        public dynamic result(){return null;}//dummy return
        public dynamic total(){return null;}//dummy return
